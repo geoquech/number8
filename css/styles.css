@@ -1,0 +1,20 @@
+.invalidDay{
+    background-color:gray;
+}
+.Weekends 
+{
+    background-color:yellow;
+}
+.Weekdays 
+{
+    background-color:green;
+}
+
+td {
+    text-align: center;
+}
+.form-control { display: inline-block !important; }
+
+#Header{
+    text-align: center;
+}

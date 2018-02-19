@@ -72,3 +72,43 @@ function getWeek(day, lastDate, firstDay) {
   }
 }
 
+function setCalendar() {
+  drawCalendar(firstDay + 1, days, date, monthName, year)
+}
+
+function drawCalendar(firstDay, lastDate, date, monthName, year) {
+ 
+  var headerHeight = 30 
+  var border = 0 
+  var cellspacing = 4 
+  var headerColor = "midnightblue" 
+  var headerSize = "+1" 
+  var colWidth = 25 
+  var dayCellHeight = 25 
+  var dayColor = "darkblue" 
+  var cellHeight = 20 
+  var todayColor = "red" 
+    //Table structure 
+
+  var text = "" // initialize accumulative variable to empty string
+  text += '<CENTER>'
+  text += '<TABLE BORDER=' + border + ' CELLSPACING=' + cellspacing + '>' // table settings
+  // variables to hold constant settings
+  var openCol = '<TD WIDTH=' + colWidth + ' HEIGHT=' + dayCellHeight + '>'
+  openCol += '<FONT COLOR="' + dayColor + '">'
+  var closeCol = '</FONT></TD>'
+  // create array of abbreviated day names
+  var weekDay = new Array(7)
+  weekDay[0] = "S"
+  weekDay[1] = "M"
+  weekDay[2] = "T"
+  weekDay[3] = "W"
+  weekDay[4] = "T"
+  weekDay[5] = "F"
+  weekDay[6] = "S"
+
+
+
+}
+
+

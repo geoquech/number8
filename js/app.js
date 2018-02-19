@@ -176,8 +176,86 @@ function drawCalendar(firstDay, lastDate, date, monthName, year) {
   text += '</CENTER>'
   // print accumulative HTML string
   document.getElementById("calendar").innerHTML = document.getElementById("calendar").innerHTML + text;
-
-
 }
+$(document).ready(function () {  
+  document.getElementById("btnCalendar").addEventListener("click", function () {
+    document.getElementById("calendar").innerHTML = "";
+    now = new Date($('#startDate').val())
+    year = now.getYear()
+    if (year < 1000)
+      year += 1900
+    month = now.getMonth()
+    monthName = getMonthName(month)
+    date = now.getDate()
+    firstDayInstance = new Date(year, month, date)
+    firstDay = firstDayInstance.getDay()
+    firstDayInstance = null
+    days = date + parseInt($('#numberDays').val() - 1);
+    numberDays = parseInt($('#numberDays').val());
+    var country = $('#countryCode').val();
+
+    while (numberDays > 0) {
+      var totalDays = getDays(month, year); 
+
+      var tempDays = date + numberDays;
+      if (tempDays > totalDays) {
+        lastDay = totalDays;
+      }
+      else {
+        lastDay = date + numberDays;
+      }
+      days = lastDay;
+      setCalendar();
+      numberDays = numberDays - daysDisplayed;
+      now = now.addMonths(1);
+      year = now.getYear();
+      if (year < 1000)
+        year += 1900;
+      month = now.getMonth();
+      monthName = getMonthName(month);
+      date = 1;
+      firstDayInstance = new Date(year, month, date);
+      firstDay = firstDayInstance.getDay();
+      firstDayInstance = null;
+    }
+  });
+});
+
+function Ajax() {
+  $.ajax({
+    type: "GET",
+    crossDomain: true,   
+    url: "https://holidayapi.com/v1/holidays",    
+    data: {
+      key: '080a3c2b-f00b-419e-b528-93ab3b386e02',
+      country: 'US',
+      year: '2008',
+      month: '12',
+      day: '25'
+    },
+    contentType: 'application/json; charset=uft-8',
+    dataType: "json",
+    beforeSend: function (httpReq) {
+      debugger;
+      var httpReq = new XMLHttpRequest();
+      var url = 'https://holidayapi.com/v1/holidays';
+      httpReq.open('GET', url);
+      httpReq.setRequestHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+      httpReq.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+      httpReq.setRequestHeader('Access-Control-Allow-Origin', '*');
+      httpReq.setRequestHeader('Access-Control-Allow-Credentials', 'true');
+      httpReq.setRequestHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
+      httpReq.setRequestHeader('Access-Control-Allow-Origin', '*');
+      httpReq.withCredentials = true;
+    },
+    success: function (response) {
+      alert('The holidays have been returned succesfuly');
+    },
+    error: function (response) {
+      alert('The holidays have been returned with an errors');
+    }
+  });
+}
+
 
 

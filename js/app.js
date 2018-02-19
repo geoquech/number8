@@ -106,7 +106,76 @@ function drawCalendar(firstDay, lastDate, date, monthName, year) {
   weekDay[4] = "T"
   weekDay[5] = "F"
   weekDay[6] = "S"
+// create first row of table to set column width and specify week day
+  text += '<TR ALIGN="center" VALIGN="center">'
+  for (var dayNum = 0; dayNum < 7; ++dayNum) {
+    text += openCol + weekDay[dayNum] + closeCol
+  }
+  text += '</TR>'
+  text += '<TH id="Header" COLSPAN=7 HEIGHT=' + headerHeight + '>' // create table header cell
+  text += '<FONT COLOR="' + headerColor + '" SIZE=' + headerSize + '>' // set font for table header
+  text += monthName + ' ' + year
+  text += '</FONT>' // close table header's font settings
+  text += '</TH>' // close header cell
 
+  // declaration and initialization of two variables to help with tables
+  var digit = date
+  var curCell = 1
+  daysDisplayed = 0;
+
+  for (var row = 1; row <= Math.ceil((lastDate + firstDay - 1) / 7); ++row) {
+    if (digit > lastDate) {
+      break;
+    }
+    text += '<TR ALIGN="right" VALIGN="top">'
+    for (var col = 1; col <= 7; ++col) {
+      if (digit > lastDate) {
+        var rows = Math.ceil((lastDate + firstDay - 1) / 7);
+        if (col < 7) {
+
+          for (var index = col; index <= 7; ++index) {
+            text += '<TD class="invalidDay"></TD>';
+          }
+          break;
+        }
+        break;
+      }
+      if (curCell < firstDay) {
+        text += '<TD class="invalidDay"></TD>';
+        curCell++
+      } else {
+        if (digit == date) { // current cell represent today's date
+          if (col == 1 || col == 7) {
+            text += '<TD class="Weekends" HEIGHT=' + cellHeight + '>'
+            //text += '<TD HEIGHT=' + cellHeight + '>'
+          }
+          else {
+            text += '<TD class="Weekdays" HEIGHT=' + cellHeight + '>'
+          }
+          text += '<FONT COLOR="' + todayColor + '">'
+          text += digit
+          text += '</FONT>'
+          text += '</TD>'
+        } else {
+          if (col == 1 || col == 7) {
+            text += '<TD class="Weekends" HEIGHT=' + cellHeight + '>' + digit + '</TD>'
+          }
+          else {
+            text += '<TD class="Weekdays" HEIGHT=' + cellHeight + '>' + digit + '</TD>'
+          }
+        }
+
+        digit++
+        daysDisplayed++;
+      }
+    }
+    text += '</TR>'
+  }
+  
+  text += '</TABLE>'
+  text += '</CENTER>'
+  // print accumulative HTML string
+  document.getElementById("calendar").innerHTML = document.getElementById("calendar").innerHTML + text;
 
 
 }

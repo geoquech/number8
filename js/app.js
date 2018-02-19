@@ -236,7 +236,8 @@ function Ajax() {
     contentType: 'application/json; charset=uft-8',
     dataType: "json",
     beforeSend: function (httpReq) {
-      debugger;
+      
+      
       var httpReq = new XMLHttpRequest();
       var url = 'https://holidayapi.com/v1/holidays';
       httpReq.open('GET', url);
